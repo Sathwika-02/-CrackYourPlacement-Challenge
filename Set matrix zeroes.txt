@@ -1,0 +1,77 @@
+Given an m x n integer matrix, if an element is 0, set its entire row and column to 0's.
+You must do it in place.
+Input: matrix = [[1,1,1],[1,0,1],[1,1,1]]
+Output: [[1,0,1],[0,0,0],[1,0,1]]
+
+Solution-1: 
+
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int row=matrix.length;
+        int col=matrix[0].length;
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(matrix[i][j]==0){
+                    int idx=i-1;
+                    while(idx>=0){
+                        if(matrix[idx][j]!=0)
+                            matrix[idx][j]=Integer.MIN_VALUE+1;
+                        idx--;
+                    }
+                    idx=i+1;
+                    while(idx<row){
+                        if(matrix[idx][j]!=0)
+                            matrix[idx][j]=Integer.MIN_VALUE+1;
+                        idx++;
+                    }
+                    idx=j-1;
+                    while(idx>=0){
+                        if(matrix[i][idx]!=0)
+                            matrix[i][idx]=Integer.MIN_VALUE+1;
+                        idx--;
+                    }
+                    idx=j+1;
+                    while(idx<col){
+                        if(matrix[i][idx]!=0)
+                            matrix[i][idx]=Integer.MIN_VALUE+1;
+                        idx++;
+                    }
+                }
+            }
+        }
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(matrix[i][j]==Integer.MIN_VALUE+1)
+                    matrix[i][j]=0;
+            }
+        }
+    }
+}
+
+Solution-2:
+
+class Solution {
+    public void setZeroes(int[][] matrix) {
+        int row=matrix.length;
+        int col=matrix[0].length;
+        int[]dummy1=new int[row];
+        int []dummy2=new int[col];
+        Arrays.fill(dummy1,Integer.MIN_VALUE+1);
+         Arrays.fill(dummy2,Integer.MIN_VALUE+1);
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(matrix[i][j]==0){
+                    dummy1[i]=0;
+                    dummy2[j]=0;
+                }
+            }
+        }
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(dummy1[i]==0 || dummy2[j]==0){
+                    matrix[i][j]=0;
+                }
+            }
+        }
+    }
+}
